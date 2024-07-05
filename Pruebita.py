@@ -24,6 +24,7 @@ with open("juegos.csv", "r", newline='', encoding="utf-8-sig") as arch:
 def Filtro_jugador():
     modalida = input("Desea juegos SinglePlayer o MultiPlayer (s/m)?: ").lower()
     if modalida == "s":
+        filtrar = []
         for sm in juegos:
             if sm["jugadores"] == 1:
                 filtrar.append(sm)
@@ -59,8 +60,12 @@ def Filtro_consola_y_año():
         if consolas in console["consola"] and fecha == console["year"]:
             filtrar.append(console)
             if len(filtrar) == 10:
-                filtrar.sort()
                 break
+    # Ordenar los juegos filtrados por nombre
+    for i in range(len(filtrar)):
+        for j in range(i + 1, len(filtrar)):
+            if filtrar[i]["nombre"] > filtrar[j]["nombre"]:
+                filtrar[i], filtrar[j] = filtrar[j], filtrar[i]
     return filtrar
 
 def Escribir_archivo(filtrar):
